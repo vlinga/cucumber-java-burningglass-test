@@ -1,0 +1,11 @@
+pages\NavigateMethods.class
+hellocucumber\NewProductsSteps.class
+hellocucumber\LoginSteps.class
+hellocucumber\RunCucumberTest.class
+hellocucumber\ProductsSteps.class
+pages\Base.class
+pages\ProductEdition.class
+pages\Product.class
+pages\NewProducts.class
+pages\Login.class
+pages\Products.class
