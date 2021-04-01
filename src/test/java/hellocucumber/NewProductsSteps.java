@@ -29,7 +29,7 @@ public class NewProductsSteps extends Base {
 	 
 	 @And("^I Mousehover (.*)$")
 	 public void i_mousehover(String model) {
-		 System.out.println("model ::: "+model);
+		 System.out.println("model is ::: "+model);
 
 	     // Write code here that turns the phrase above into concrete actions
 		 newProducts.moveHover(model);
