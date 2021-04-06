@@ -2,6 +2,7 @@ package pages;
 
 import java.util.List;
 
+import io.cucumber.java.en.Then;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -25,6 +26,7 @@ public class NewProducts extends Base {
     By searchbox = By.xpath("\t/html/body/div[1]/div/header/div[2]/div[1]/div/div/div/div[2]/input");
 	By Allnewnextpagestart = By.xpath("//*[@id=\"category-root\"]/div[1]/div[");
     By Allnewnextpageend = By.xpath("\"]/div[3]/div/div/a");
+	By colourname  = By.xpath("//*[@id=\"filter-container\"]/descendant::span");
     private static String[] links = null;
     private static int linksCount = 0;
 	 public void product(){
@@ -96,7 +98,25 @@ public class NewProducts extends Base {
 	        }
 
 }
+	public void select(String colours) throws Throwable {
 
+
+
+		System.out.println("mouse hover page"+model );
+		if(colours.equalsIgnoreCase("Multi"))
+		{
+			super.select(colourname);
+		}else if (colours.equalsIgnoreCase("Black"))
+
+		{
+			super.select(colourname);
+		}else if (colours.equalsIgnoreCase("Blue"))
+		{
+			super.select(colourname);
+
+		}
+	}
+	}
 
 
 	   public List<WebElement> GetAllProducts(){

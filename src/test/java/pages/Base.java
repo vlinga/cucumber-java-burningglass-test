@@ -171,6 +171,12 @@ public class Base {
 						
 		}
 	}
+	public void select(By by_locator) throws Throwable {
+
+
+		WebDriverWait wait = new WebDriverWait(browser, 50);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator)).click();
+	}
    
 	public void Allnewnextpage(String Allnewnextpagestart , String Allnewnextpageend) {
 		String xpath_start = Allnewnextpagestart;

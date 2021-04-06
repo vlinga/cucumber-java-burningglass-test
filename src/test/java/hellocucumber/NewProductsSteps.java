@@ -64,6 +64,10 @@ public class NewProductsSteps extends Base {
 	{
 		navigateMethods.scrollPage(to);
 	}
+	@Then("^Select (.+)$")
+	public void select(String colours) throws Throwable {
+
+	}
 
 
 
