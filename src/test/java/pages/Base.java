@@ -6,11 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -23,6 +19,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
 public class Base {
+	private static By by_locator;
 	public ExtentReports rep = null;
 	public ExtentTest test = null;
     public static WebDriver browser;
@@ -30,7 +27,7 @@ public class Base {
     public static WebElement element;
 	protected WebDriverWait wait ;
 
-	
+
 	/*
 	 * @BeforeMethod public void init(ITestResult result) {
 	 * System.out.println("Before method"); rep = ExtentManager.getReports(); test =
@@ -72,9 +69,11 @@ public class Base {
         String browserName = prop.getProperty("browser");
 
         if(browserName.equals("chrome")){
-          //  browser = new ChromeDriver();
+			ChromeOptions options = new ChromeOptions();
+
+			//  browser = new ChromeDriver();
         	//Create a instance of ChromeOptions class
-        	ChromeOptions options = new ChromeOptions();
+
 
         	//Add chrome switch to disable notification - "**--disable-notifications**"
         	options.addArguments("--disable-notifications");
@@ -84,7 +83,10 @@ public class Base {
 
         	//Pass ChromeOptions instance to ChromeDriver Constructor
         	 browser =new ChromeDriver(options);
-        }else if(browserName.equals("firefox")){
+			browser.manage().window().maximize();
+
+
+		}else if(browserName.equals("firefox")){
             browser = new FirefoxDriver();
             browser.manage().window().maximize();
         }
@@ -113,13 +115,13 @@ public class Base {
     }
 
     public void SendText(By by_locator, String text){
-        WebDriverWait wait = new WebDriverWait(browser, 10);
+        WebDriverWait wait = new WebDriverWait(browser, 100);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator)).sendKeys(text);
     }
 
     public void Click(By by_locator){
     	System.out.println("xpath is " + by_locator);
-        WebDriverWait wait = new WebDriverWait(browser, 50);
+        WebDriverWait wait = new WebDriverWait(browser, 100);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator)).click();
     }
 
@@ -138,7 +140,7 @@ public class Base {
     public void hoverOverElement(By by_locator)
 	{    	System.out.println("xpath is in mousehover " + by_locator);
 
-    	wait =  new WebDriverWait(browser, 50);
+    	wait =  new WebDriverWait(browser, 100);
 		Actions action = new Actions(browser);
 		element = wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator));
 		action.moveToElement(element).perform();
@@ -174,36 +176,34 @@ public class Base {
 	public void select(By by_locator) throws Throwable {
 
 
-		WebDriverWait wait = new WebDriverWait(browser, 50);
+		WebDriverWait wait = new WebDriverWait(browser, 100);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator)).click();
 	}
-   
-	public void Allnewnextpage(String Allnewnextpagestart , String Allnewnextpageend) {
+	public String  coloursCount(By by_locator) throws Throwable {
+		String count = "";
+		WebDriverWait wait = new WebDriverWait(browser, 100);
+		count = wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator)).getText();
+		return count;
+	}
+
+	public void Allnewnextpage(String Allnewnextpagestart , String Allnewnextpageend, String count) {
 		String xpath_start = Allnewnextpagestart;
 		String xpath_end = Allnewnextpageend;
-		for (int i=1; i< 5; i++) {
+		Integer countVal = Integer.parseInt(count);
+		for (int i=1; i< countVal/40 && i <= 5; i++) {
 			By by_locator1 = By.xpath(Allnewnextpagestart + i + Allnewnextpageend);
-			//By locator = By.xpath("//*[@id=\"category-root\"]/div[2]/div[2]/div[2]/div/div/div/li[2]/a");
 		    WebDriverWait wait = new WebDriverWait(browser, 100);
 		    
 		    System.out.println("by_locator1 :: "+by_locator1);
-		 //   JavascriptExecutor js =(JavascriptExecutor)browser;
-	       // js.executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-		
+
 	        boolean result = false;
 	        int attempts = 0;
 	        while(attempts < 4) {
 	            try {
 	            	browser.manage().window().maximize() ;
-	            	//WebElement element = browser.findElement(by_locator1);
 	            	WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by_locator1));
 	            	JavascriptExecutor executor = (JavascriptExecutor)browser;
 	            	executor.executeScript("arguments[0].click()", element);
-	    	       //  wait.until(ExpectedConditions.visibilityOfElementLocated(locator))
-	    	      // .click();		
-	    	      //  WebElement button = browser.findElement(locator);
-	             //   button.click();
-	
 	                result = true;
 	                break;
 	            } catch(NoSuchElementException e) {

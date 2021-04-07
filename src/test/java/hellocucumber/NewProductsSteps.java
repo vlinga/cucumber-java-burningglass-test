@@ -18,7 +18,8 @@ public class NewProductsSteps extends Base {
 	NavigateMethods navigateMethods = new NavigateMethods();
 
     String Allnewnextpagestart = "//*[@id=\"category-root\"]/div[2]/div[2]/div[2]/div/div/div/li[";
-    String Allnewnextpageend = "]/a";	
+    String Allnewnextpageend = "]/a";
+	String count = null;
 	
 	 @Given("^I open inthestyle$")
      public void i_open_amazon() {
@@ -57,7 +58,7 @@ public class NewProductsSteps extends Base {
     @Then("^I Click on Allnewnextpage$")
     public void i_click_on_Allnewnextpage() {
 	     // Write code here that turns the phrase above into concrete actions
-		 newProducts.Allnewnextpage(Allnewnextpagestart,Allnewnextpageend);
+		 newProducts.Allnewnextpage(Allnewnextpagestart,Allnewnextpageend,count);
 	 }
     @When("^I scrollPage (top)$")
 	public void scroll_page(String to) throws Exception
@@ -66,9 +67,15 @@ public class NewProductsSteps extends Base {
 	}
 	@Then("^Select (.+)$")
 	public void select(String colours) throws Throwable {
+	 	newProducts.select(colours);
 
 	}
 
+	@Then("Return total count (.+)$")
+	public void return_total_count(String colours) throws Throwable {
+		count = newProducts.totalCount(colours);
+		System.out.println("total product count is  ::: "+count);
+	}
 
 
 }
